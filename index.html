@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Rock Paper Scissors Part 2
+  </title>
+</head>
+
+<body>
+
+  <div id="game">
+    <h1> The Psychic Game</h1>
+    <p>Guess what letter I'm thinking of</p>
+  </div>
+  
+  <script type="text/javascript">
+
+
+//Create an arraylist of possible computer guesses 
+    var computerChoices = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+
+//Create a randomly generated letter from array   
+    var computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
+    
+    //Gameds HTML
+
+
+//Game object to hold game variables
+    var game = {
+      "wins": 0,
+      "losses" : 0,
+      "guessesLeft": 9, 
+      "guesses": [], 
+    }
+
+//function to reset the game if someone wins or loses
+    var reset = function(game) {
+      game.guessesLeft = 9;
+      game.guesses = [];
+      return game;
+    }
+
+//fuction create event when user presses keys
+    document.onkeyup = function(event) {
+
+      // Determines which key was pressed.
+      var userGuess = event.key;
+      
+      //You have 10 guesses to pick what the computer picks
+      if (game.guessesLeft === 0) {
+        game.losses++;
+        reset(game);
+      }
+
+      //If the user guesses the computer guess, it's a win
+      if (userGuess === computerGuess) {
+        game.wins++;
+        reset(game);
+      } else {
+        game.guessesLeft--;
+        game.guesses.push(userGuess);
+      }
+
+      var html =
+        "<h1> The Psychic Game</h1>" +
+        "<p>Guess what letter I'm thinking of</p>" +
+        "<p>Wins: " + game.wins + "</p>" +
+        "<p>Losses: " + game.losses + "</p>" +
+        "<p>Guesses Left: " + game.guessesLeft + "</p>" +
+        "<p>Your guesses so far: " + " "+ game.guesses + " " + "</p>";
+  
+        document.querySelector("#game").innerHTML = html;  
+    }
+  </script>
+  
+</body>
+
+</html>
